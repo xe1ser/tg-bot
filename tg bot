@@ -1,0 +1,75 @@
+Import telebot 
+import easyocr
+from telebot import types from Сode import*
+from var import token
+
+def telegram_bot(token):
+bot = telebot.TeleBot(token)
+
+@bot.message_handler(commands=["start"]) def start_message(message):
+startMsgSend(bot, message)
+
+@bot.message_handler(commands=["menu"]) def menu_talk(message):
+MenuTalk(bot, message)
+
+@bot.message_handler(content_types=["text", "photo", "sticker"]) def handle_docs_photo(message):
+    def txt_m(message):
+        if message.text.lower() == "приветствую":
+            Hello (bot, message)
+        else:
+            Questions (bot, message)
+if message.textisphoto(): chat_id = message.chat.id
+
+file_info = bot.get_file(message.document.file_id) downloaded_file = bot.download_file(file_info.file_path)
+
+src = 'C:/Python/Project/tg_bot/files/received/' + message.document.file_name; with open(src, 'wb') as new_file:
+new_file.write(downloaded_file) Obrabotka(bot, message)
+bot.polling()
+
+
+if name == ' main ': game = 0
+suport = 0 telegram_bot(token)
+
+from time import sleep
+from datetime import datetime
+ from random import choice import easyocr
+def Questions(bot, message):
+    mess =  message.text.lower()
+    Answers = [[f"Всё хорошо!", f"Не очень, я сегодня не в настроении", f"В целом неплохо"],
+              [f"Отдыхал", f"Работал", f"Играл"], 
+              [f"Кашу", f"Гречку", f"Суп"], 
+              [f"Интерстеллер", f"Гарри Поттер", f"Мстители"], 
+              [f"Пиццу!", f"Боты не едят", f"Электричество"]]
+    match mess:
+        case "как у тебя дела?":
+            bot.send_message(message.chat.id, choice(Answers[0]))
+        case "чем занимался сегодня?":
+            bot.send_message(message.chat.id, choice(Answers[1]))
+        case "что ты ел сегодня?":
+            bot.send_message(message.chat.id, choice(Answers[2]))
+        case "какие ты любишь фильмы?":
+            bot.send_message(message.chat.id, choice(Answers[3]))
+        case "что ты любишь есть?":
+            bot.send_message(message.chat.id, choice(Answers[4]))
+
+
+
+
+
+#getUsName
+def getUsName(message):
+usName = str(message.from_user.first_name)
+if str(message.from_user.last_name).lower() != "none": usName += (" " + str(message.from_user.last_name))
+return usName
+
+
+#StartMessages
+def startMsgSend(bot, message): usName = getUsName(message)
+bot.send_message(message.chat.id, f"Привет!")
+
+
+def Obrabotka(bot, message):
+reader = easyocr.Reader(["ru","en"])
+result = reader.readertext(file_path, detail = 0, paragraph = true) with open (twxt_file_name, "w") as file:
+for line in result: file.write(f"{line}\n\n")
+bot.send_message(message.chat.id, result) 
